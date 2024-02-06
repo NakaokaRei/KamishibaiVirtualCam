@@ -1,0 +1,518 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2350330E2B46CED500943AF3 /* KamishibaiVirtualCamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2350330D2B46CED500943AF3 /* KamishibaiVirtualCamApp.swift */; };
+		235033102B46CED500943AF3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2350330F2B46CED500943AF3 /* ContentView.swift */; };
+		235033122B46CED700943AF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235033112B46CED700943AF3 /* Assets.xcassets */; };
+		235033152B46CED700943AF3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235033142B46CED700943AF3 /* Preview Assets.xcassets */; };
+		235033232B46D00F00943AF3 /* CameraExtensionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235033222B46D00F00943AF3 /* CameraExtensionProvider.swift */; };
+		235033252B46D00F00943AF3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235033242B46D00F00943AF3 /* main.swift */; };
+		2350332A2B46D00F00943AF3 /* com.n.rei.KamishibaiVirtualCam.CameraExtension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 235033202B46D00F00943AF3 /* com.n.rei.KamishibaiVirtualCam.CameraExtension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		23C04D172B727248008200B5 /* SelectImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D162B727248008200B5 /* SelectImageManager.swift */; };
+		23C04D1B2B7277B0008200B5 /* ImageGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D1A2B7277B0008200B5 /* ImageGridViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		235033282B46D00F00943AF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 235033022B46CED500943AF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2350331F2B46D00F00943AF3;
+			remoteInfo = CameraExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2350332E2B46D00F00943AF3 /* Embed System Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SYSTEM_EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				2350332A2B46D00F00943AF3 /* com.n.rei.KamishibaiVirtualCam.CameraExtension.systemextension in Embed System Extensions */,
+			);
+			name = "Embed System Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2350330A2B46CED500943AF3 /* KamishibaiVirtualCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KamishibaiVirtualCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2350330D2B46CED500943AF3 /* KamishibaiVirtualCamApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KamishibaiVirtualCamApp.swift; sourceTree = "<group>"; };
+		2350330F2B46CED500943AF3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		235033112B46CED700943AF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		235033142B46CED700943AF3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		235033162B46CED700943AF3 /* KamishibaiVirtualCam.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KamishibaiVirtualCam.entitlements; sourceTree = "<group>"; };
+		235033202B46D00F00943AF3 /* com.n.rei.KamishibaiVirtualCam.CameraExtension.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = com.n.rei.KamishibaiVirtualCam.CameraExtension.systemextension; sourceTree = BUILT_PRODUCTS_DIR; };
+		235033222B46D00F00943AF3 /* CameraExtensionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraExtensionProvider.swift; sourceTree = "<group>"; };
+		235033242B46D00F00943AF3 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		235033262B46D00F00943AF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		235033272B46D00F00943AF3 /* CameraExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CameraExtension.entitlements; sourceTree = "<group>"; };
+		23C04D162B727248008200B5 /* SelectImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectImageManager.swift; path = ../../../SelectImageManager.swift; sourceTree = "<group>"; };
+		23C04D1A2B7277B0008200B5 /* ImageGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridViewModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		235033072B46CED500943AF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2350331D2B46D00F00943AF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		235033012B46CED500943AF3 = {
+			isa = PBXGroup;
+			children = (
+				2350330C2B46CED500943AF3 /* KamishibaiVirtualCam */,
+				235033212B46D00F00943AF3 /* CameraExtension */,
+				2350330B2B46CED500943AF3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2350330B2B46CED500943AF3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2350330A2B46CED500943AF3 /* KamishibaiVirtualCam.app */,
+				235033202B46D00F00943AF3 /* com.n.rei.KamishibaiVirtualCam.CameraExtension.systemextension */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2350330C2B46CED500943AF3 /* KamishibaiVirtualCam */ = {
+			isa = PBXGroup;
+			children = (
+				2350330D2B46CED500943AF3 /* KamishibaiVirtualCamApp.swift */,
+				2350330F2B46CED500943AF3 /* ContentView.swift */,
+				23C04D162B727248008200B5 /* SelectImageManager.swift */,
+				235033112B46CED700943AF3 /* Assets.xcassets */,
+				235033162B46CED700943AF3 /* KamishibaiVirtualCam.entitlements */,
+				235033132B46CED700943AF3 /* Preview Content */,
+				23C04D1A2B7277B0008200B5 /* ImageGridViewModel.swift */,
+			);
+			path = KamishibaiVirtualCam;
+			sourceTree = "<group>";
+		};
+		235033132B46CED700943AF3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				235033142B46CED700943AF3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		235033212B46D00F00943AF3 /* CameraExtension */ = {
+			isa = PBXGroup;
+			children = (
+				235033222B46D00F00943AF3 /* CameraExtensionProvider.swift */,
+				235033242B46D00F00943AF3 /* main.swift */,
+				235033262B46D00F00943AF3 /* Info.plist */,
+				235033272B46D00F00943AF3 /* CameraExtension.entitlements */,
+			);
+			path = CameraExtension;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		235033092B46CED500943AF3 /* KamishibaiVirtualCam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 235033192B46CED700943AF3 /* Build configuration list for PBXNativeTarget "KamishibaiVirtualCam" */;
+			buildPhases = (
+				235033062B46CED500943AF3 /* Sources */,
+				235033072B46CED500943AF3 /* Frameworks */,
+				235033082B46CED500943AF3 /* Resources */,
+				2350332E2B46D00F00943AF3 /* Embed System Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				235033292B46D00F00943AF3 /* PBXTargetDependency */,
+			);
+			name = KamishibaiVirtualCam;
+			productName = KamishibaiVirtualCam;
+			productReference = 2350330A2B46CED500943AF3 /* KamishibaiVirtualCam.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2350331F2B46D00F00943AF3 /* CameraExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2350332B2B46D00F00943AF3 /* Build configuration list for PBXNativeTarget "CameraExtension" */;
+			buildPhases = (
+				2350331C2B46D00F00943AF3 /* Sources */,
+				2350331D2B46D00F00943AF3 /* Frameworks */,
+				2350331E2B46D00F00943AF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CameraExtension;
+			productName = CameraExtension;
+			productReference = 235033202B46D00F00943AF3 /* com.n.rei.KamishibaiVirtualCam.CameraExtension.systemextension */;
+			productType = "com.apple.product-type.system-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		235033022B46CED500943AF3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					235033092B46CED500943AF3 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					2350331F2B46D00F00943AF3 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+				};
+			};
+			buildConfigurationList = 235033052B46CED500943AF3 /* Build configuration list for PBXProject "KamishibaiVirtualCam" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 235033012B46CED500943AF3;
+			productRefGroup = 2350330B2B46CED500943AF3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				235033092B46CED500943AF3 /* KamishibaiVirtualCam */,
+				2350331F2B46D00F00943AF3 /* CameraExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		235033082B46CED500943AF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235033152B46CED700943AF3 /* Preview Assets.xcassets in Resources */,
+				235033122B46CED700943AF3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2350331E2B46D00F00943AF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		235033062B46CED500943AF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235033102B46CED500943AF3 /* ContentView.swift in Sources */,
+				2350330E2B46CED500943AF3 /* KamishibaiVirtualCamApp.swift in Sources */,
+				23C04D1B2B7277B0008200B5 /* ImageGridViewModel.swift in Sources */,
+				23C04D172B727248008200B5 /* SelectImageManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2350331C2B46D00F00943AF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235033252B46D00F00943AF3 /* main.swift in Sources */,
+				235033232B46D00F00943AF3 /* CameraExtensionProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		235033292B46D00F00943AF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2350331F2B46D00F00943AF3 /* CameraExtension */;
+			targetProxy = 235033282B46D00F00943AF3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		235033172B46CED700943AF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		235033182B46CED700943AF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		2350331A2B46CED700943AF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = KamishibaiVirtualCam/KamishibaiVirtualCam.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"KamishibaiVirtualCam/Preview Content\"";
+				DEVELOPMENT_TEAM = 7ZJJ7KR6WA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.n.rei.KamishibaiVirtualCam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2350331B2B46CED700943AF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = KamishibaiVirtualCam/KamishibaiVirtualCam.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"KamishibaiVirtualCam/Preview Content\"";
+				DEVELOPMENT_TEAM = 7ZJJ7KR6WA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.n.rei.KamishibaiVirtualCam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		2350332C2B46D00F00943AF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CameraExtension/CameraExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7ZJJ7KR6WA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CameraExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CameraExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.n.rei.KamishibaiVirtualCam.CameraExtension;
+				PRODUCT_NAME = "$(inherited)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2350332D2B46D00F00943AF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CameraExtension/CameraExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7ZJJ7KR6WA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CameraExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CameraExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.n.rei.KamishibaiVirtualCam.CameraExtension;
+				PRODUCT_NAME = "$(inherited)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		235033052B46CED500943AF3 /* Build configuration list for PBXProject "KamishibaiVirtualCam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				235033172B46CED700943AF3 /* Debug */,
+				235033182B46CED700943AF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		235033192B46CED700943AF3 /* Build configuration list for PBXNativeTarget "KamishibaiVirtualCam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2350331A2B46CED700943AF3 /* Debug */,
+				2350331B2B46CED700943AF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2350332B2B46D00F00943AF3 /* Build configuration list for PBXNativeTarget "CameraExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2350332C2B46D00F00943AF3 /* Debug */,
+				2350332D2B46D00F00943AF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 235033022B46CED500943AF3 /* Project object */;
+}
