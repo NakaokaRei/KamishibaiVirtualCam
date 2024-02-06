@@ -21,8 +21,6 @@
 		23C04D252B727EDF008200B5 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 23C04D242B727EDF008200B5 /* Defaults */; };
 		23C04D272B727F0B008200B5 /* Defaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D262B727F0B008200B5 /* Defaults+Keys.swift */; };
 		23C04D282B7282BA008200B5 /* Defaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D262B727F0B008200B5 /* Defaults+Keys.swift */; };
-		23C04D2B2B72844C008200B5 /* NSImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D2A2B72844C008200B5 /* NSImage+Extensions.swift */; };
-		23C04D2C2B72844E008200B5 /* NSImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D2A2B72844C008200B5 /* NSImage+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +63,6 @@
 		23C04D1C2B7278DD008200B5 /* SelectImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectImageManager.swift; sourceTree = "<group>"; };
 		23C04D1E2B7279B4008200B5 /* ImageGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridView.swift; sourceTree = "<group>"; };
 		23C04D262B727F0B008200B5 /* Defaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Keys.swift"; sourceTree = "<group>"; };
-		23C04D2A2B72844C008200B5 /* NSImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				23C04D262B727F0B008200B5 /* Defaults+Keys.swift */,
-				23C04D2A2B72844C008200B5 /* NSImage+Extensions.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -269,7 +265,6 @@
 			files = (
 				23C04D1F2B7279B4008200B5 /* ImageGridView.swift in Sources */,
 				235033102B46CED500943AF3 /* ContentView.swift in Sources */,
-				23C04D2B2B72844C008200B5 /* NSImage+Extensions.swift in Sources */,
 				23C04D1D2B7278DD008200B5 /* SelectImageManager.swift in Sources */,
 				23C04D272B727F0B008200B5 /* Defaults+Keys.swift in Sources */,
 				2350330E2B46CED500943AF3 /* KamishibaiVirtualCamApp.swift in Sources */,
@@ -283,7 +278,6 @@
 			files = (
 				23C04D282B7282BA008200B5 /* Defaults+Keys.swift in Sources */,
 				235033252B46D00F00943AF3 /* main.swift in Sources */,
-				23C04D2C2B72844E008200B5 /* NSImage+Extensions.swift in Sources */,
 				235033232B46D00F00943AF3 /* CameraExtensionProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

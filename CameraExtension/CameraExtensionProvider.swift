@@ -9,9 +9,10 @@ import Foundation
 import CoreMediaIO
 import IOKit.audio
 import os.log
-import Cocoa
 import Defaults
+import CoreImage
 
+let kWhiteStripeHeight: Int = 10
 let kFrameRate: Int = 60
 
 // MARK: -
@@ -20,6 +21,12 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 	private(set) var device: CMIOExtensionDevice!
 	
 	private var _streamSource: CameraExtensionStreamSource!
+	
+	private var _streamingCounter: UInt32 = 0
+	
+	private var _timer: DispatchSourceTimer?
+	
+	private let _timerQueue = DispatchQueue(label: "timerQueue", qos: .userInteractive, attributes: [], autoreleaseFrequency: .workItem, target: .global(qos: .userInteractive))
 	
 	private var _videoDescription: CMFormatDescription!
 	
@@ -30,7 +37,11 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 	private var _whiteStripeStartRow: UInt32 = 0
 	
 	private var _whiteStripeIsAscending: Bool = false
-	
+
+    private var imageUrl: URL?
+
+    private let ciContext = CIContext()
+
 	init(localizedName: String) {
 		
 		super.init()
@@ -89,55 +100,93 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 		guard let _ = _bufferPool else {
 			return
 		}
+		
+		_streamingCounter += 1
+		
+		_timer = DispatchSource.makeTimerSource(flags: .strict, queue: _timerQueue)
+		_timer!.schedule(deadline: .now(), repeating: 1.0 / Double(kFrameRate), leeway: .seconds(0))
+		
+		_timer!.setEventHandler {
 			
-        var err: OSStatus = 0
-        let now = CMClockGetTime(CMClockGetHostTimeClock())
-
-        var pixelBuffer: CVPixelBuffer?
-        err = CVPixelBufferPoolCreatePixelBufferWithAuxAttributes(kCFAllocatorDefault, self._bufferPool, self._bufferAuxAttributes, &pixelBuffer)
-        if err != 0 {
-            os_log(.error, "out of pixel buffers \(err)")
-        }
-
-        if let pixelBuffer = pixelBuffer {
-
-            CVPixelBufferLockBaseAddress(pixelBuffer, [])
-
-            let bufferPtr = CVPixelBufferGetBaseAddress(pixelBuffer)!
-            let height = CVPixelBufferGetHeight(pixelBuffer)
-            let rowBytes = CVPixelBufferGetBytesPerRow(pixelBuffer)
-            memset(bufferPtr, 0, rowBytes * height)
-
-            CVPixelBufferUnlockBaseAddress(pixelBuffer, [])
-
-            var sbuf: CMSampleBuffer!
-            var timingInfo = CMSampleTimingInfo()
-            timingInfo.presentationTimeStamp = CMClockGetTime(CMClockGetHostTimeClock())
-            err = CMSampleBufferCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: pixelBuffer, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: self._videoDescription, sampleTiming: &timingInfo, sampleBufferOut: &sbuf)
-            if err == 0 {
-                self._streamSource.stream.send(sbuf, discontinuity: [], hostTimeInNanoseconds: UInt64(timingInfo.presentationTimeStamp.seconds * Double(NSEC_PER_SEC)))
-            }
-            os_log(.info, "video time \(timingInfo.presentationTimeStamp.seconds) now \(now.seconds) err \(err)")
-        }
+			var err: OSStatus = 0
+			let now = CMClockGetTime(CMClockGetHostTimeClock())
+			
+			var pixelBuffer: CVPixelBuffer?
+			err = CVPixelBufferPoolCreatePixelBufferWithAuxAttributes(kCFAllocatorDefault, self._bufferPool, self._bufferAuxAttributes, &pixelBuffer)
+			if err != 0 {
+				os_log(.error, "out of pixel buffers \(err)")
+			}
+			
+			if let pixelBuffer = pixelBuffer {
+				
+				CVPixelBufferLockBaseAddress(pixelBuffer, [])
+				
+				var bufferPtr = CVPixelBufferGetBaseAddress(pixelBuffer)!
+				let width = CVPixelBufferGetWidth(pixelBuffer)
+				let height = CVPixelBufferGetHeight(pixelBuffer)
+				let rowBytes = CVPixelBufferGetBytesPerRow(pixelBuffer)
+				memset(bufferPtr, 0, rowBytes * height)
+				
+				let whiteStripeStartRow = self._whiteStripeStartRow
+				if self._whiteStripeIsAscending {
+					self._whiteStripeStartRow = whiteStripeStartRow - 1
+					self._whiteStripeIsAscending = self._whiteStripeStartRow > 0
+				}
+				else {
+					self._whiteStripeStartRow = whiteStripeStartRow + 1
+					self._whiteStripeIsAscending = self._whiteStripeStartRow >= (height - kWhiteStripeHeight)
+				}
+				bufferPtr += rowBytes * Int(whiteStripeStartRow)
+				for _ in 0..<kWhiteStripeHeight {
+					for _ in 0..<width {
+						var white: UInt32 = 0xFFFF0000
+						memcpy(bufferPtr, &white, MemoryLayout.size(ofValue: white))
+						bufferPtr += MemoryLayout.size(ofValue: white)
+					}
+				}
+				
+				CVPixelBufferUnlockBaseAddress(pixelBuffer, [])
+				
+				var sbuf: CMSampleBuffer!
+				var timingInfo = CMSampleTimingInfo()
+				timingInfo.presentationTimeStamp = CMClockGetTime(CMClockGetHostTimeClock())
+                if let imageUrl = self.imageUrl, let ciImage = CIImage(contentsOf: imageUrl) {
+                    self.ciContext.render(ciImage, to: pixelBuffer)
+                    err = CMSampleBufferCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: pixelBuffer, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: self._videoDescription, sampleTiming: &timingInfo, sampleBufferOut: &sbuf)
+                } else {
+                    err = CMSampleBufferCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: pixelBuffer, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: self._videoDescription, sampleTiming: &timingInfo, sampleBufferOut: &sbuf)
+                }
+				if err == 0 {
+					self._streamSource.stream.send(sbuf, discontinuity: [], hostTimeInNanoseconds: UInt64(timingInfo.presentationTimeStamp.seconds * Double(NSEC_PER_SEC)))
+				}
+				os_log(.info, "video time \(timingInfo.presentationTimeStamp.seconds) now \(now.seconds) err \(err)")
+			}
+		}
+		
+		_timer!.setCancelHandler {
+		}
+		
+		_timer!.resume()
+	}
+	
+	func stopStreaming() {
+		
+		if _streamingCounter > 1 {
+			_streamingCounter -= 1
+		}
+		else {
+			_streamingCounter = 0
+			if let timer = _timer {
+				timer.cancel()
+				_timer = nil
+			}
+		}
 	}
 
     func observe() {
         Task {
             for await imageUrl in Defaults.updates(.selectedImageUrl) {
-                showImage(imageUrl: imageUrl)
-            }
-        }
-    }
-
-    func showImage(imageUrl: URL) {
-        let image = NSImage(contentsOf: imageUrl)
-        if let pixelBuffer = image?.pixelBuffer() {
-            var sbuf: CMSampleBuffer!
-            var timingInfo = CMSampleTimingInfo()
-            timingInfo.presentationTimeStamp = CMClockGetTime(CMClockGetHostTimeClock())
-            let err = CMSampleBufferCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: pixelBuffer, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: self._videoDescription, sampleTiming: &timingInfo, sampleBufferOut: &sbuf)
-            if err == 0 {
-                self._streamSource.stream.send(sbuf, discontinuity: [], hostTimeInNanoseconds: UInt64(timingInfo.presentationTimeStamp.seconds * Double(NSEC_PER_SEC)))
+                self.imageUrl = imageUrl
             }
         }
     }
@@ -146,8 +195,7 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 // MARK: -
 
 class CameraExtensionStreamSource: NSObject, CMIOExtensionStreamSource {
-    func stopStream() throws {}
-
+	
 	private(set) var stream: CMIOExtensionStream!
 	
 	let device: CMIOExtensionDevice
@@ -215,7 +263,14 @@ class CameraExtensionStreamSource: NSObject, CMIOExtensionStreamSource {
 		}
 		deviceSource.startStreaming()
 	}
-
+	
+	func stopStream() throws {
+		
+		guard let deviceSource = device.source as? CameraExtensionDeviceSource else {
+			fatalError("Unexpected source type \(String(describing: device.source))")
+		}
+		deviceSource.stopStreaming()
+	}
 }
 
 // MARK: -
