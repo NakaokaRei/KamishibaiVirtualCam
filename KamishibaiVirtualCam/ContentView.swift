@@ -12,6 +12,13 @@ struct ContentView: View {
 
     let extensionId = "com.n.rei.KamishibaiVirtualCam.CameraExtension"
     var body: some View {
+        VStack {
+            buttons
+            ImageGridView()
+        }
+    }
+
+    var buttons: some View {
         HStack {
             Button {
                 let activeRequest = OSSystemExtensionRequest.activationRequest(
@@ -28,7 +35,6 @@ struct ContentView: View {
                 Text("Uninstall")
             }
         }
-        .padding()
     }
 }
 

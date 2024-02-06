@@ -11,10 +11,7 @@ import Combine
 
 class SelectImageManager {
 
-    static let shared = SelectImageManager()
     @Published private(set) var imageUrls: [URL] = []
-
-    private init() {}
 
     func selectImage() {
         let panel = NSOpenPanel()
