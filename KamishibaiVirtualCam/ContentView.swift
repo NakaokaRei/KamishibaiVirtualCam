@@ -13,8 +13,8 @@ struct ContentView: View {
     let extensionId = "com.n.rei.KamishibaiVirtualCam.CameraExtension"
     var body: some View {
         VStack {
-            buttons
             ImageGridView()
+            buttons
         }
     }
 

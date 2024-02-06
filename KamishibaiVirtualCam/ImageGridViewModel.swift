@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import Cocoa
 
 @MainActor
 class ImageGridViewModel: ObservableObject {
 
-    @Published var imageUrls: [URL] = []
+    private let userDefaults = UserDefaults.standard
+    @Published private(set) var imageUrls: [URL] = []
 
     let selectImageManger = SelectImageManager()
 

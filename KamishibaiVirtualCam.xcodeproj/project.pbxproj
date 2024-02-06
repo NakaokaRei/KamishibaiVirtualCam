@@ -17,6 +17,12 @@
 		23C04D1B2B7277B0008200B5 /* ImageGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D1A2B7277B0008200B5 /* ImageGridViewModel.swift */; };
 		23C04D1D2B7278DD008200B5 /* SelectImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D1C2B7278DD008200B5 /* SelectImageManager.swift */; };
 		23C04D1F2B7279B4008200B5 /* ImageGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D1E2B7279B4008200B5 /* ImageGridView.swift */; };
+		23C04D222B727ECE008200B5 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 23C04D212B727ECE008200B5 /* Defaults */; };
+		23C04D252B727EDF008200B5 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 23C04D242B727EDF008200B5 /* Defaults */; };
+		23C04D272B727F0B008200B5 /* Defaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D262B727F0B008200B5 /* Defaults+Keys.swift */; };
+		23C04D282B7282BA008200B5 /* Defaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D262B727F0B008200B5 /* Defaults+Keys.swift */; };
+		23C04D2B2B72844C008200B5 /* NSImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D2A2B72844C008200B5 /* NSImage+Extensions.swift */; };
+		23C04D2C2B72844E008200B5 /* NSImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C04D2A2B72844C008200B5 /* NSImage+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +64,8 @@
 		23C04D1A2B7277B0008200B5 /* ImageGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridViewModel.swift; sourceTree = "<group>"; };
 		23C04D1C2B7278DD008200B5 /* SelectImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectImageManager.swift; sourceTree = "<group>"; };
 		23C04D1E2B7279B4008200B5 /* ImageGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridView.swift; sourceTree = "<group>"; };
+		23C04D262B727F0B008200B5 /* Defaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Keys.swift"; sourceTree = "<group>"; };
+		23C04D2A2B72844C008200B5 /* NSImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23C04D222B727ECE008200B5 /* Defaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23C04D252B727EDF008200B5 /* Defaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,9 +91,11 @@
 		235033012B46CED500943AF3 = {
 			isa = PBXGroup;
 			children = (
+				23C04D292B72840C008200B5 /* Shared */,
 				2350330C2B46CED500943AF3 /* KamishibaiVirtualCam */,
 				235033212B46D00F00943AF3 /* CameraExtension */,
 				2350330B2B46CED500943AF3 /* Products */,
+				23C04D232B727EDF008200B5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +142,22 @@
 			path = CameraExtension;
 			sourceTree = "<group>";
 		};
+		23C04D232B727EDF008200B5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		23C04D292B72840C008200B5 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				23C04D262B727F0B008200B5 /* Defaults+Keys.swift */,
+				23C04D2A2B72844C008200B5 /* NSImage+Extensions.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,6 +176,9 @@
 				235033292B46D00F00943AF3 /* PBXTargetDependency */,
 			);
 			name = KamishibaiVirtualCam;
+			packageProductDependencies = (
+				23C04D212B727ECE008200B5 /* Defaults */,
+			);
 			productName = KamishibaiVirtualCam;
 			productReference = 2350330A2B46CED500943AF3 /* KamishibaiVirtualCam.app */;
 			productType = "com.apple.product-type.application";
@@ -165,6 +196,9 @@
 			dependencies = (
 			);
 			name = CameraExtension;
+			packageProductDependencies = (
+				23C04D242B727EDF008200B5 /* Defaults */,
+			);
 			productName = CameraExtension;
 			productReference = 235033202B46D00F00943AF3 /* com.n.rei.KamishibaiVirtualCam.CameraExtension.systemextension */;
 			productType = "com.apple.product-type.system-extension";
@@ -196,6 +230,9 @@
 				Base,
 			);
 			mainGroup = 235033012B46CED500943AF3;
+			packageReferences = (
+				23C04D202B727ECE008200B5 /* XCRemoteSwiftPackageReference "Defaults" */,
+			);
 			productRefGroup = 2350330B2B46CED500943AF3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -232,7 +269,9 @@
 			files = (
 				23C04D1F2B7279B4008200B5 /* ImageGridView.swift in Sources */,
 				235033102B46CED500943AF3 /* ContentView.swift in Sources */,
+				23C04D2B2B72844C008200B5 /* NSImage+Extensions.swift in Sources */,
 				23C04D1D2B7278DD008200B5 /* SelectImageManager.swift in Sources */,
+				23C04D272B727F0B008200B5 /* Defaults+Keys.swift in Sources */,
 				2350330E2B46CED500943AF3 /* KamishibaiVirtualCamApp.swift in Sources */,
 				23C04D1B2B7277B0008200B5 /* ImageGridViewModel.swift in Sources */,
 			);
@@ -242,7 +281,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23C04D282B7282BA008200B5 /* Defaults+Keys.swift in Sources */,
 				235033252B46D00F00943AF3 /* main.swift in Sources */,
+				23C04D2C2B72844E008200B5 /* NSImage+Extensions.swift in Sources */,
 				235033232B46D00F00943AF3 /* CameraExtensionProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,6 +558,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		23C04D202B727ECE008200B5 /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:sindresorhus/Defaults.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		23C04D212B727ECE008200B5 /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23C04D202B727ECE008200B5 /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+		23C04D242B727EDF008200B5 /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23C04D202B727ECE008200B5 /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 235033022B46CED500943AF3 /* Project object */;
 }
