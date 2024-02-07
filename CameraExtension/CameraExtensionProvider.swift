@@ -12,7 +12,7 @@ import os.log
 import Defaults
 import CoreImage
 
-let kFrameRate: Int = 60
+let kFrameRate: Int = 10
 
 // MARK: -
 
@@ -34,7 +34,6 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 	private var _bufferAuxAttributes: NSDictionary!
 
     private var selectedBase64Image = ""
-    private var ciColor = CIColor.green
 
     let width: Int32 = 1920
     let height: Int32 = 1080
@@ -66,7 +65,6 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 		} catch let error {
 			fatalError("Failed to add stream: \(error.localizedDescription)")
 		}
-        observeSetting()
 	}
 	
 	var availableProperties: Set<CMIOExtensionProperty> {
@@ -118,11 +116,12 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 
                 var ciImage: CIImage
 
-//                if let imageData = Data(base64Encoded: self.selectedBase64Image), let loadedCiImage = CIImage(data: imageData) {
-//                    ciImage = loadedCiImage
-//                } else {
-                    ciImage = CIImage(color: self.ciColor)
-//                }
+                if let imageData = Data(base64Encoded: self.selectedBase64Image), let loadedCiImage = CIImage(data: imageData) {
+                    ciImage = loadedCiImage
+                    ciImage = CIImage(color: .blue)
+                } else {
+                    ciImage = CIImage(color: .red)
+                }
 
                 let context = CIContext()
                 let targetWidth = CGFloat(self.width)
@@ -179,19 +178,12 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 		}
 	}
 
-    private func observeSetting() {
+    func observe() {
         Task {
             for await base64Image in Defaults.updates(.selectedBase64Image) {
-                ciColor = CIColor(red: randomColorComponent(),
-                                       green: randomColorComponent(),
-                                       blue: randomColorComponent(),
-                                       alpha: 1.0)
+                self.selectedBase64Image = base64Image
             }
         }
-    }
-
-    func randomColorComponent() -> CGFloat {
-        return CGFloat(arc4random_uniform(256)) / 255.0
     }
 }
 
