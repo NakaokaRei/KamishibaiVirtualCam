@@ -8,6 +8,8 @@
 import Foundation
 import Defaults
 
+let suiteName = UserDefaults(suiteName: "7ZJJ7KR6WA.com.n.rei.KamishibaiVirtualCam")!
+
 extension Defaults.Keys {
-    public static let selectedImageUrl = Key<URL>("selectedImageUrl", default: URL(fileURLWithPath: ""))
+    public static let selectedBase64Image = Key<String>("selectedBase64Image", default: "", suite: suiteName)
 }

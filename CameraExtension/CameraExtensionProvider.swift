@@ -12,7 +12,6 @@ import os.log
 import Defaults
 import CoreImage
 
-let kWhiteStripeHeight: Int = 10
 let kFrameRate: Int = 60
 
 // MARK: -
@@ -33,14 +32,12 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 	private var _bufferPool: CVPixelBufferPool!
 	
 	private var _bufferAuxAttributes: NSDictionary!
-	
-	private var _whiteStripeStartRow: UInt32 = 0
-	
-	private var _whiteStripeIsAscending: Bool = false
 
-    private var imageUrl: URL?
+    private var selectedBase64Image = ""
+    private var ciColor = CIColor.green
 
-    private let ciContext = CIContext()
+    let width: Int32 = 1920
+    let height: Int32 = 1080
 
 	init(localizedName: String) {
 		
@@ -48,7 +45,7 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 		let deviceID = UUID() // replace this with your device UUID
 		self.device = CMIOExtensionDevice(localizedName: localizedName, deviceID: deviceID, legacyDeviceID: nil, source: self)
 		
-		let dims = CMVideoDimensions(width: 1920, height: 1080)
+        let dims = CMVideoDimensions(width: width, height: height)
 		CMVideoFormatDescriptionCreate(allocator: kCFAllocatorDefault, codecType: kCVPixelFormatType_32BGRA, width: dims.width, height: dims.height, extensions: nil, formatDescriptionOut: &_videoDescription)
 		
 		let pixelBufferAttributes: NSDictionary = [
@@ -69,7 +66,7 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 		} catch let error {
 			fatalError("Failed to add stream: \(error.localizedDescription)")
 		}
-        observe()
+        observeSetting()
 	}
 	
 	var availableProperties: Set<CMIOExtensionProperty> {
@@ -118,44 +115,43 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 			}
 			
 			if let pixelBuffer = pixelBuffer {
-				
-				CVPixelBufferLockBaseAddress(pixelBuffer, [])
-				
-				var bufferPtr = CVPixelBufferGetBaseAddress(pixelBuffer)!
-				let width = CVPixelBufferGetWidth(pixelBuffer)
-				let height = CVPixelBufferGetHeight(pixelBuffer)
-				let rowBytes = CVPixelBufferGetBytesPerRow(pixelBuffer)
-				memset(bufferPtr, 0, rowBytes * height)
-				
-				let whiteStripeStartRow = self._whiteStripeStartRow
-				if self._whiteStripeIsAscending {
-					self._whiteStripeStartRow = whiteStripeStartRow - 1
-					self._whiteStripeIsAscending = self._whiteStripeStartRow > 0
-				}
-				else {
-					self._whiteStripeStartRow = whiteStripeStartRow + 1
-					self._whiteStripeIsAscending = self._whiteStripeStartRow >= (height - kWhiteStripeHeight)
-				}
-				bufferPtr += rowBytes * Int(whiteStripeStartRow)
-				for _ in 0..<kWhiteStripeHeight {
-					for _ in 0..<width {
-						var white: UInt32 = 0xFFFF0000
-						memcpy(bufferPtr, &white, MemoryLayout.size(ofValue: white))
-						bufferPtr += MemoryLayout.size(ofValue: white)
-					}
-				}
-				
-				CVPixelBufferUnlockBaseAddress(pixelBuffer, [])
-				
+
+                var ciImage: CIImage
+
+//                if let imageData = Data(base64Encoded: self.selectedBase64Image), let loadedCiImage = CIImage(data: imageData) {
+//                    ciImage = loadedCiImage
+//                } else {
+                    ciImage = CIImage(color: self.ciColor)
+//                }
+
+                let context = CIContext()
+                let targetWidth = CGFloat(self.width)
+                let targetHeight = CGFloat(self.height)
+
+                // 元の画像のアスペクト比と、目標のアスペクト比を計算
+                let originalAspectRatio = ciImage.extent.width / ciImage.extent.height
+                let targetAspectRatio = targetWidth / targetHeight
+
+                // スケールファクターを計算
+                let scaleFactor: CGFloat
+                if originalAspectRatio > targetAspectRatio {
+                    // 元の画像の方が横長の場合、幅に合わせてスケール
+                    scaleFactor = targetWidth / ciImage.extent.width
+                } else {
+                    // 元の画像の方が縦長の場合、高さに合わせてスケール
+                    scaleFactor = targetHeight / ciImage.extent.height
+                }
+
+                let resizedImage = ciImage.transformed(by: CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
+
+                CVPixelBufferLockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: 0))
+                context.render(resizedImage, to: pixelBuffer)
+                CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: 0))
+
 				var sbuf: CMSampleBuffer!
 				var timingInfo = CMSampleTimingInfo()
 				timingInfo.presentationTimeStamp = CMClockGetTime(CMClockGetHostTimeClock())
-                if let imageUrl = self.imageUrl, let ciImage = CIImage(contentsOf: imageUrl) {
-                    self.ciContext.render(ciImage, to: pixelBuffer)
-                    err = CMSampleBufferCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: pixelBuffer, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: self._videoDescription, sampleTiming: &timingInfo, sampleBufferOut: &sbuf)
-                } else {
-                    err = CMSampleBufferCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: pixelBuffer, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: self._videoDescription, sampleTiming: &timingInfo, sampleBufferOut: &sbuf)
-                }
+                err = CMSampleBufferCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: pixelBuffer, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: self._videoDescription, sampleTiming: &timingInfo, sampleBufferOut: &sbuf)
 				if err == 0 {
 					self._streamSource.stream.send(sbuf, discontinuity: [], hostTimeInNanoseconds: UInt64(timingInfo.presentationTimeStamp.seconds * Double(NSEC_PER_SEC)))
 				}
@@ -183,12 +179,19 @@ class CameraExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
 		}
 	}
 
-    func observe() {
+    private func observeSetting() {
         Task {
-            for await imageUrl in Defaults.updates(.selectedImageUrl) {
-                self.imageUrl = imageUrl
+            for await base64Image in Defaults.updates(.selectedBase64Image) {
+                ciColor = CIColor(red: randomColorComponent(),
+                                       green: randomColorComponent(),
+                                       blue: randomColorComponent(),
+                                       alpha: 1.0)
             }
         }
+    }
+
+    func randomColorComponent() -> CGFloat {
+        return CGFloat(arc4random_uniform(256)) / 255.0
     }
 }
 
