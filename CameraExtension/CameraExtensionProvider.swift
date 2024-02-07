@@ -41,21 +41,13 @@ class ExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
         return output
     }()
 
-    lazy var session: AVCaptureSession = {
-        var session = AVCaptureSession()
-        session.addInput(input)
-        output.setSampleBufferDelegate(self, queue: .main)
-        session.addOutput(output)
-        return session
-    }()
-
     init(localizedName: String) {
 
         super.init()
         let deviceID = UUID() // replace this with your device UUID
         self.device = CMIOExtensionDevice(localizedName: localizedName, deviceID: deviceID, legacyDeviceID: nil, source: self)
 
-        let dims = CMVideoDimensions(width: 1920, height: 1080)
+        let dims = CMVideoDimensions(width: width, height: height)
         CMVideoFormatDescriptionCreate(allocator: kCFAllocatorDefault, codecType: kCVPixelFormatType_32BGRA, width: dims.width, height: dims.height, extensions: nil, formatDescriptionOut: &_videoDescription)
 
         let pixelBufferAttributes: NSDictionary = [
@@ -103,18 +95,15 @@ class ExtensionDeviceSource: NSObject, CMIOExtensionDeviceSource {
         // Handle settable properties here.
     }
 
-    func startStreaming() {
-        session.startRunning()
-    }
+    func startStreaming() {}
 
-    func stopStreaming() {
-        session.stopRunning()
-    }
+    func stopStreaming() {}
 
     private func observeSettings() {
         Task {
             for await base64Image in Defaults.updates(.selectedBase64Image) {
                 self.selectedBase64Image = base64Image
+                showImage()
             }
         }
     }
@@ -307,26 +296,6 @@ class ExtensionProviderSource: NSObject, CMIOExtensionProviderSource {
     func setProviderProperties(_ providerProperties: CMIOExtensionProviderProperties) throws {
 
         // Handle settable properties here.
-    }
-}
-
-extension ExtensionDeviceSource: AVCaptureVideoDataOutputSampleBufferDelegate {
-
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        showImage()
-    }
-
-    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        _streamSource.stream.send(sampleBuffer, discontinuity: .sampleDropped, hostTimeInNanoseconds: 0)
-    }
-
-    private func compose(bgImage: CIImage, overlayImage: CIImage?) -> CIImage? {
-        guard let filterComposite = filterComposite, let overlayImage = overlayImage else {
-            return bgImage
-        }
-        filterComposite.setValue(overlayImage, forKeyPath: kCIInputImageKey)
-        filterComposite.setValue(bgImage, forKeyPath: kCIInputBackgroundImageKey)
-        return filterComposite.outputImage
     }
 }
 
