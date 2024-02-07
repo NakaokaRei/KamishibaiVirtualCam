@@ -478,7 +478,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CameraExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CameraExtension;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Use camera";
 				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,7 +505,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CameraExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CameraExtension;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Use camera";
 				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

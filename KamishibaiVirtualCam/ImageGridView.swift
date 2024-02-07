@@ -10,7 +10,6 @@ import Defaults
 
 struct ImageGridView: View {
 
-    @Default(.selectedBase64Image) private var selectedBase64Image
     @StateObject private var viewModel = ImageGridViewModel()
 
     var body: some View {
@@ -38,7 +37,7 @@ struct ImageGridView: View {
                                 return
                             }
                             // DataオブジェクトをBase64エンコードされた文字列に変換
-                            selectedBase64Image = imageData.base64EncodedString()
+                            Defaults[.selectedBase64Image] = imageData.base64EncodedString()
                         }
                     } label: {
                         Image(nsImage: NSImage(contentsOf: url)!)
